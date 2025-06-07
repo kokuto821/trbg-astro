@@ -1,0 +1,21 @@
+---
+import type { GetStaticPaths } from "astro";
+import { fetchAllPosts } from "../utils/fetchAllPosts";
+import { POSTS_URL } from "../constants/urls";
+import type { WordPressPost } from "../types/type";
+import { PerPostPage } from "../components/page/PerPostPage";
+
+export const getStaticPaths = (async () => {
+  const posts = await fetchAllPosts();
+  return posts;
+}) satisfies GetStaticPaths;
+
+const { id } = Astro.params;
+const idForUrl = id.toString();
+const perPostUrl = `${POSTS_URL}${idForUrl}`;
+const res = await fetch(perPostUrl);
+const post: WordPressPost = await res.json();
+---
+
+<meta charset="utf-8" />
+<PerPostPage post={post} />
