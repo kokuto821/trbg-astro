@@ -1,5 +1,4 @@
-const BASE_URL =
-  "https://kokutoweb.littlestar.jp/portfolio/trbg/wp-json/wp/v2/";
+const BASE_URL = import.meta.env.PUBLIC_POSTS_URL;
 
 export const POSTS_ALL_URL = `${BASE_URL}posts?per_page=100/`;
 export const POSTS_URL = `${BASE_URL}posts/`;
