@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { MEDIA_URL } from "../../constants/urls";
-import type { WordPressPost, WordPressPostDetail } from "../../types/type";
+import type { WordPressPostDetail } from "../../types/type";
 import { fetchAllPosts } from "../../utils/fetchAllPosts";
 import { formatDateToYMD } from "../../utils/formatDateToYMD";
 import { GernateEyeCatch } from "../organisms/GenerateEyeChatch";
+import { getCategoryName } from "../../utils/getCategoryName";
+import { useGudgeDevice } from "../../hooks/useGudgeDevice";
 
 export const Mainpage = () => {
   const [posts, setPosts] = useState<WordPressPostDetail[]>([]);
@@ -21,7 +22,9 @@ export const Mainpage = () => {
               <h2 className="main__title--text">{post.title.rendered}</h2>
               <ul className="meta">
                 <li className="meta__day">{formatDateToYMD(post.date)}</li>
-                <li className="meta__category">{post.categories}</li>
+                <li className="meta__category">
+                  {post.categories.map(getCategoryName).join(", ")}
+                </li>
               </ul>
             </div>
             <div className="eyecatch">
@@ -34,7 +37,7 @@ export const Mainpage = () => {
                   <GernateEyeCatch featuredMediaId={post.featured_media} />
                 </a>
               ) : (
-                "noimage"
+                <img src="/img/no-image.png" alt="No image available" />
               )}
             </div>
             <div>

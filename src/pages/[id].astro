@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro";
 import { fetchAllPosts } from "../utils/fetchAllPosts";
 import type { WordPressPostDetail } from "../types/type";
 import { SinglePage } from "../components/page/SinglePage";
+import { Header } from "../components/organisms/Header";
 
 export const getStaticPaths = (async () => {
   const posts: WordPressPostDetail[] = await fetchAllPosts();
@@ -15,4 +16,5 @@ const { id } = await Astro.params;
 ---
 
 <meta charset="utf-8" />
-<SinglePage postId={id} />
+<Header client:load />
+<SinglePage postId={id} client:load />

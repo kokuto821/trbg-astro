@@ -14,8 +14,8 @@ import { WholePageWrapper } from "../components/organisms/WholePageWrapper";
     <title>Astro</title>
   </head>
   <body>
-    <WholePageWrapper>
-      <Header />
+    <WholePageWrapper client:load>
+      <Header client:load />
       <Mainpage client:load />
     </WholePageWrapper>
   </body>
