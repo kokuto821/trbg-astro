@@ -1,24 +1,18 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { fetchAllPosts } from "../utils/fetchAllPosts";
-import { EMBED, POSTS_URL } from "../constants/urls";
 import type { WordPressPostDetail } from "../types/type";
 import { SinglePage } from "../components/page/SinglePage";
 
 export const getStaticPaths = (async () => {
   const posts: WordPressPostDetail[] = await fetchAllPosts();
   return posts.map((post) => ({
-    params: { id: post.id.toString() },
+    params: { id: post.id },
   }));
 }) satisfies GetStaticPaths;
 
-const { id } = Astro.params;
-const res = await fetch(`${POSTS_URL}${id}?_embed`);
-if (!res.ok) {
-  throw new Error(`記事データの取得に失敗しました: ${res.status}`);
-}
-const post: WordPressPostDetail = await res.json();
+const { id } = await Astro.params;
 ---
 
 <meta charset="utf-8" />
-<SinglePage post={post} />
+<SinglePage postId={id} />
