@@ -4,7 +4,6 @@ import { fetchAllPosts } from "../../utils/fetchAllPosts";
 import { formatDateToYMD } from "../../utils/formatDateToYMD";
 import { GernateEyeCatch } from "../organisms/GenerateEyeChatch";
 import { getCategoryName } from "../../utils/getCategoryName";
-import { useGudgeDevice } from "../../hooks/useGudgeDevice";
 
 export const Mainpage = () => {
   const [posts, setPosts] = useState<WordPressPostDetail[]>([]);

@@ -1,0 +1,15 @@
+export const color = {
+  white: "rgb(255, 255, 255)",
+  pink: "rgb(255, 239, 253)",
+  lightPink: "rgb(254, 170, 170)",
+  lightBlack: "rgb(25, 25, 25)",
+  gray: "rgb(221, 221, 221)",
+  normalGray: "rgb(126, 126, 126)",
+  lightGray: "rgb(233, 233, 233)",
+  lightLightGray: "rgb(252, 252, 252)",
+  lightYellow: "rgb(255, 255, 228)",
+  darkBlue: "rgb(81, 125, 153)",
+  littleDarkGreen: "rgb(106, 193, 183)",
+  lightGreen: "rgb(230, 255, 228)",
+  whiteGreen: "rgb(223, 239, 237)",
+};
