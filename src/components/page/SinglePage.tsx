@@ -1,5 +1,6 @@
 import { POSTS_URL, EMBED } from "../../constants/urls";
 import type { WordPressPostDetail } from "../../types/type";
+import { PerPageWrapper } from "../organisms/PerPageWrapper";
 
 type Props = {
   postId: number;
@@ -14,12 +15,14 @@ export const SinglePage = async ({ postId }: Props) => {
   }
   const post: WordPressPostDetail = await res.json();
   return (
-    <div className="container max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{post.title.rendered}</h1>
-      <div
-        className="mt-5"
-        dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-      />
-    </div>
+    <PerPageWrapper>
+      <div className="container max-w-xl mx-auto">
+        <h1 className="text-3xl font-bold mb-4">{post.title.rendered}</h1>
+        <div
+          className="mt-5"
+          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+        />
+      </div>
+    </PerPageWrapper>
   );
 };

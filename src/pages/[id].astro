@@ -4,6 +4,7 @@ import { fetchAllPosts } from "../utils/fetchAllPosts";
 import type { WordPressPostDetail } from "../types/type";
 import { SinglePage } from "../components/page/SinglePage";
 import { Header } from "../components/organisms/Header";
+import { WholePageWrapper } from "../components/organisms/WholePageWrapper";
 
 export const getStaticPaths = (async () => {
   const posts: WordPressPostDetail[] = await fetchAllPosts();
@@ -15,6 +16,20 @@ export const getStaticPaths = (async () => {
 const { id } = await Astro.params;
 ---
 
-<meta charset="utf-8" />
-<Header client:load />
-<SinglePage postId={id} client:load />
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <WholePageWrapper client:load>
+      <Header client:load />
+      <SinglePage postId={id} client:load />
+    </WholePageWrapper>
+    <script src="/js/humbergerMenuMove.js" type="module"></script>
+  </body>
+</html>
