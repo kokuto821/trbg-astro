@@ -5,20 +5,21 @@ import type { WordPressPostDetail } from '../types/type';
 import { SinglePage } from '../components/page/SinglePage';
 import { Header } from '../components/organisms/Header';
 import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
+import { Sidebar } from '../components/organisms/Sidebar';
 
 export const getStaticPaths = (async () => {
-  try {
-    const posts: WordPressPostDetail[] = await fetchAllPosts();
-    return posts.map(post => ({
-      params: { id: post.id },
-    }));
-  } catch (e) {
-    console.error('getStaticPaths error:', e);
-    return [];
-  }
+  const posts: WordPressPostDetail[] = await fetchAllPosts();
+  return posts.map(post => {
+    const date = new Date(post.date);
+    const formattedYearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`; // "YYYY-MM"
+    return {
+      date,
+      params: { yearMonth: formattedYearMonth, id: post.id }, // Convert id to string for Astro params
+    };
+  });
 }) satisfies GetStaticPaths;
 
-const { id } = await Astro.params;
+const { id } = Astro.params;
 ---
 
 <html lang="ja">
@@ -34,6 +35,7 @@ const { id } = await Astro.params;
     <WholePageWrapper client:load>
       <Header client:load />
       <SinglePage postId={id} client:load />
+      <Sidebar />
     </WholePageWrapper>
     <script src="/js/humbergerMenuMove.js" type="module"></script>
   </body>
