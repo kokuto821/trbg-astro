@@ -5,6 +5,7 @@ import type { WordPressPostDetail } from '../types/type';
 import { SinglePage } from '../components/page/SinglePage';
 import { Header } from '../components/organisms/Header';
 import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
+
 export const getStaticPaths = (async () => {
   try {
     const posts: WordPressPostDetail[] = await fetchAllPosts();
