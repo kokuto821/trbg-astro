@@ -7,6 +7,8 @@ import { Header } from '../components/organisms/Header';
 import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
 import { Sidebar } from '../components/organisms/Sidebar';
 
+const posts: WordPressPostDetail[] = await fetchAllPosts();
+
 export const getStaticPaths = (async () => {
   const posts: WordPressPostDetail[] = await fetchAllPosts();
   return posts.map(post => {
@@ -35,7 +37,7 @@ const { id } = Astro.params;
     <WholePageWrapper client:load>
       <Header client:load />
       <SinglePage postId={id} client:load />
-      <Sidebar />
+      <Sidebar posts={posts} client:load />
     </WholePageWrapper>
     <script src="/js/humbergerMenuMove.js" type="module"></script>
   </body>

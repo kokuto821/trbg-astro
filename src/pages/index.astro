@@ -3,6 +3,10 @@ import { Mainpage } from '../components/page/MainPage';
 import { Header } from '../components/organisms/Header';
 import { Sidebar } from '../components/organisms/Sidebar';
 import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
+import { fetchAllPosts } from '../utils/fetchAllPosts';
+import type { WordPressPostDetail } from '../types/type';
+
+const posts: WordPressPostDetail[] = await fetchAllPosts();
 ---
 
 <html lang="ja">
@@ -18,7 +22,7 @@ import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
     <WholePageWrapper client:load>
       <Header client:load />
       <Mainpage client:load />
-      <Sidebar client:load />
+      <Sidebar posts={posts} client:load />
     </WholePageWrapper>
     <script src="/js/humbergerMenuMove.js" type="module"></script>
   </body>

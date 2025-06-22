@@ -3,9 +3,15 @@ import { getYearMonthFromPosts } from '../../utils/getYearMonthFromPosts';
 import { postsAtom } from '../../store/postAtom';
 import { useAtomValue } from 'jotai';
 import { removeDuplicates } from '../../utils/removeDeplicates';
+import type { WordPressPostDetail } from '../../types/type';
 
-export const Sidebar: FC = () => {
-  const posts = useAtomValue(postsAtom);
+type Props = {
+  posts: WordPressPostDetail[];
+};
+
+export const Sidebar: FC<Props> = ({ posts: propPosts }) => {
+  const atomPosts = useAtomValue(postsAtom);
+  const posts = propPosts || atomPosts;
   const yearMonthList = getYearMonthFromPosts({ posts });
   const uniqueYearMonthList = removeDuplicates(yearMonthList, 'formattedYearMonth');
   return (
@@ -31,27 +37,13 @@ export const Sidebar: FC = () => {
       <div className="menu">
         <h2 className="menu__title">Archive</h2>
         <div className="menu__archive">
-          {uniqueYearMonthList.map((yearMonth, idx) => (
+          {uniqueYearMonthList.map(yearMonth => (
             <div className="menu__archive--list" key={`${yearMonth.year}-${yearMonth.month}`}>
               <a href={`/${yearMonth.year}/${yearMonth.month}`}>
                 {`${yearMonth.year}年${yearMonth.month}月`}
               </a>
             </div>
           ))}
-
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
         </div>
       </div>
     </div>

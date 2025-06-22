@@ -18,6 +18,8 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
+const posts: WordPressPostDetail[] = await fetchAllPosts();
+
 const { yearMonth } = await Astro.params;
 ---
 
@@ -34,7 +36,7 @@ const { yearMonth } = await Astro.params;
     <WholePageWrapper client:load>
       <Header client:load />
       <div>yearMonth: {yearMonth}</div>
-      <Sidebar client:load />
+      <Sidebar posts={posts} client:load />
     </WholePageWrapper>
     <script src="/js/humbergerMenuMove.js" type="module"></script>
   </body>
