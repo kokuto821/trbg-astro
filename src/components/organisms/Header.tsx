@@ -30,7 +30,7 @@ export const Header: FC = () => {
     <header className="header">
       <div className="header__inner" id="header">
         <h1 className="header__title header-title">
-          <a href="<?php echo esc_url(home_url()); ?>" target="_blank">
+          <a href="/" target="_blank">
             <img
               src="https://code-jump.com/demo/html/blog/img/logo.svg"
               alt="<?php bloginfo('name'); ?>"
