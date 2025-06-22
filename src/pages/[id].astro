@@ -1,14 +1,13 @@
 ---
-import type { GetStaticPaths } from "astro";
-import { fetchAllPosts } from "../utils/fetchAllPosts";
-import type { WordPressPostDetail } from "../types/type";
-import { SinglePage } from "../components/page/SinglePage";
-import { Header } from "../components/organisms/Header";
-import { WholePageWrapper } from "../components/organisms/WholePageWrapper";
-
+import type { GetStaticPaths } from 'astro';
+import { fetchAllPosts } from '../utils/fetchAllPosts';
+import type { WordPressPostDetail } from '../types/type';
+import { SinglePage } from '../components/page/SinglePage';
+import { Header } from '../components/organisms/Header';
+import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
+const posts: WordPressPostDetail[] = await fetchAllPosts();
 export const getStaticPaths = (async () => {
-  const posts: WordPressPostDetail[] = await fetchAllPosts();
-  return posts.map((post) => ({
+  return posts.map(post => ({
     params: { id: post.id },
   }));
 }) satisfies GetStaticPaths;
