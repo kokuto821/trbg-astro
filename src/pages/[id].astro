@@ -5,11 +5,16 @@ import type { WordPressPostDetail } from '../types/type';
 import { SinglePage } from '../components/page/SinglePage';
 import { Header } from '../components/organisms/Header';
 import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
-const posts: WordPressPostDetail[] = await fetchAllPosts();
 export const getStaticPaths = (async () => {
-  return posts.map(post => ({
-    params: { id: post.id },
-  }));
+  try {
+    const posts: WordPressPostDetail[] = await fetchAllPosts();
+    return posts.map(post => ({
+      params: { id: post.id },
+    }));
+  } catch (e) {
+    console.error('getStaticPaths error:', e);
+    return [];
+  }
 }) satisfies GetStaticPaths;
 
 const { id } = await Astro.params;
