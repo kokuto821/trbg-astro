@@ -1,0 +1,41 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Header } from '../components/organisms/Header';
+import { Sidebar } from '../components/organisms/Sidebar';
+import { WholePageWrapper } from '../components/organisms/WholePageWrapper';
+import type { WordPressPostDetail } from '../types/type';
+import { fetchAllPosts } from '../utils/fetchAllPosts';
+
+export const getStaticPaths = (async () => {
+  const posts: WordPressPostDetail[] = await fetchAllPosts();
+  return posts.map(post => {
+    const date = new Date(post.date);
+    const formattedYearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`; // "YYYY-MM"
+    return {
+      date,
+      params: { yearMonth: formattedYearMonth },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { yearMonth } = await Astro.params;
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <WholePageWrapper client:load>
+      <Header client:load />
+      <div>yearMonth: {yearMonth}</div>
+      <Sidebar client:load />
+    </WholePageWrapper>
+    <script src="/js/humbergerMenuMove.js" type="module"></script>
+  </body>
+</html>

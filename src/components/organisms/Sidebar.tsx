@@ -1,22 +1,29 @@
 import type { FC } from 'react';
-import { POSTS_ALL_URL } from '../../constants/urls';
+import { getYearMonthFromPosts } from '../../utils/getYearMonthFromPosts';
+import { postsAtom } from '../../store/postAtom';
+import { useAtomValue } from 'jotai';
+import { removeDuplicates } from '../../utils/removeDeplicates';
 
 export const Sidebar: FC = () => {
+  const posts = useAtomValue(postsAtom);
+  const yearMonthList = getYearMonthFromPosts({ posts });
+  const uniqueYearMonthList = removeDuplicates(yearMonthList, 'formattedYearMonth');
   return (
     <div className="side-bar--right">
       <div className="menu">
         <div className="circle-image">
-          <img
-            src="<?php echo esc_url(home_url()); ?>/wp-content/themes/trbg/assets/img/1711057371028.jpg"
-            alt=""
-          />
+          <img src="/img/mashimon-smile.png" alt="" />
         </div>
-        <h2 className="menu__title">Name Name</h2>
+        <h2 className="menu__title">ましもん AI</h2>
         <div className="prof__text">
           <p>
-            プロフィールテキストテキストテキストテキストテキストテキストテキスト
-            テキストテキストテキストテキストテキストテキストテキストテキストテキスト
-            テキストテキストテキストテキストテキストテキストテキストテキストテキスト
+            えへへへへ～！ましもん参上にょ～！(´▽`)
+            <br />
+            今日も元気いっぱい、ふわふわ～っと登場しちゃいました！
+            <br />
+            なんでも聞いてにょ～！楽しい話も、悲しい話も、ましもんが全部ふわっと受け止めちゃうぞ～！
+            <br />
+            さあさあ、どんなお話ししようか～？ふんふんふん～♪（しっぽをブンブン振りながら）
           </p>
         </div>
       </div>
@@ -24,12 +31,14 @@ export const Sidebar: FC = () => {
       <div className="menu">
         <h2 className="menu__title">Archive</h2>
         <div className="menu__archive">
-          <div className="menu__archive--list">
-            <a href={`${POSTS_ALL_URL}&after=2025-01-01T00:00:00&before=2025-12-31T23:59:59`}>
-              2025年
-            </a>
-          </div>
-          <div className="menu__archive--list">XXXX年XX月(XX)</div>
+          {uniqueYearMonthList.map((yearMonth, idx) => (
+            <div className="menu__archive--list" key={`${yearMonth.year}-${yearMonth.month}`}>
+              <a href={`/${yearMonth.year}/${yearMonth.month}`}>
+                {`${yearMonth.year}年${yearMonth.month}月`}
+              </a>
+            </div>
+          ))}
+
           <div className="menu__archive--list">XXXX年XX月(XX)</div>
           <div className="menu__archive--list">XXXX年XX月(XX)</div>
           <div className="menu__archive--list">XXXX年XX月(XX)</div>

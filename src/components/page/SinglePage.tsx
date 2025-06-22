@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const SinglePage = async ({ postId }: Props) => {
-  const res = await fetch(`${POSTS_URL}${postId}${EMBED}`);
+  const res = await fetch(`${POSTS_URL}/${postId}${EMBED}`);
   console.log('SinglePage fetch', `${POSTS_URL}${postId}${EMBED}`);
   console.log('SinglePage', res);
   if (!res.ok) {

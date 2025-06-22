@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
-import type { WordPressPostDetail } from "../../types/type";
-import { fetchAllPosts } from "../../utils/fetchAllPosts";
-import { formatDateToYMD } from "../../utils/formatDateToYMD";
-import { GernateEyeCatch } from "../organisms/GenerateEyeChatch";
-import { getCategoryName } from "../../utils/getCategoryName";
+import { useEffect } from 'react';
+import { fetchAllPosts } from '../../utils/fetchAllPosts';
+import { formatDateToYMD } from '../../utils/formatDateToYMD';
+import { GernateEyeCatch } from '../organisms/GenerateEyeChatch';
+import { getCategoryName } from '../../utils/getCategoryName';
+import { useAtom } from 'jotai';
+import { postsAtom } from '../../store/postAtom';
 
 export const Mainpage = () => {
-  const [posts, setPosts] = useState<WordPressPostDetail[]>([]);
+  const [posts, setPosts] = useAtom(postsAtom);
 
   useEffect(() => {
     fetchAllPosts().then(setPosts);
@@ -22,17 +23,13 @@ export const Mainpage = () => {
               <ul className="meta">
                 <li className="meta__day">{formatDateToYMD(post.date)}</li>
                 <li className="meta__category">
-                  {post.categories.map(getCategoryName).join(", ")}
+                  {post.categories.map(getCategoryName).join(', ')}
                 </li>
               </ul>
             </div>
             <div className="eyecatch">
               {post.featured_media !== 0 ? (
-                <a
-                  href={`/${post.id}`}
-                  title="View featured image"
-                  className="main__article-link"
-                >
+                <a href={`/${post.id}`} title="View featured image" className="main__article-link">
                   <GernateEyeCatch featuredMediaId={post.featured_media} />
                 </a>
               ) : (
@@ -42,16 +39,12 @@ export const Mainpage = () => {
             <div>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: post.excerpt?.rendered ?? "",
+                  __html: post.excerpt?.rendered ?? '',
                 }}
               />
             </div>
             <div>
-              <a
-                href={`/${post.id}`}
-                className="main__article-link"
-                title="Read Full Article"
-              >
+              <a href={`/${post.id}`} className="main__article-link" title="Read Full Article">
                 <span className="main__article-link--text">Read More</span>
               </a>
             </div>
