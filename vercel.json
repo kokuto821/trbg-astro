@@ -1,0 +1,5 @@
+{
+  "env": {
+    "VERCEL_SKEW_PROTECTION_MAX_AGE": "1"
+  }
+}
